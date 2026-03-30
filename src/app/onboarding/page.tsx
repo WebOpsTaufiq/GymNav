@@ -46,7 +46,6 @@ export default function OnboardingPage() {
         .upsert({
           id: user.id,
           gym_id: gymData.id,
-          email: user.email, // Ensure email is available for admin
           role: 'owner'
         });
 

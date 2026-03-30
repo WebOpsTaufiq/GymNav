@@ -18,7 +18,7 @@ export default async function AdminPanel() {
 
   const { data: gyms, error: gymFetchError } = await supabaseAdmin
     .from('gyms')
-    .select('*, profiles!owner_id(id, email)')
+    .select('*, owner:profiles(id, full_name)')
     .order('created_at', { ascending: false });
 
   if (gymFetchError) {
@@ -81,7 +81,7 @@ function AdminRow({ gym }: { gym: any }) {
       </td>
       <td className="px-6 py-5 align-middle">
         <p className="text-sm font-medium text-slate-600">
-          {(Array.isArray(gym.profiles) ? gym.profiles[0] : gym.profiles)?.email || 'N/A'}
+          {(Array.isArray(gym.owner) ? gym.owner[0] : gym.owner)?.full_name || 'N/A'}
         </p>
       </td>
       <td className="px-6 py-5 align-middle">
