@@ -16,10 +16,14 @@ export default async function AdminPanel() {
     );
   }
 
-  const { data: gyms } = await supabaseAdmin
+  const { data: gyms, error: gymFetchError } = await supabaseAdmin
     .from('gyms')
-    .select('*, profiles(id, email)')
+    .select('*, profiles!owner_id(id, email)')
     .order('created_at', { ascending: false });
+
+  if (gymFetchError) {
+    console.error('Gym Fetch Error:', gymFetchError);
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 p-8">

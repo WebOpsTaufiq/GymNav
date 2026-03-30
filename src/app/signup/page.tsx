@@ -123,6 +123,7 @@ export default function SignupPage() {
         id: userId,
         gym_id: gymData.id,
         full_name: fullName,
+        email: email, // Store email for admin dashboard
         role: 'owner'
       });
 
