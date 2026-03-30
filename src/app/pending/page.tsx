@@ -2,8 +2,9 @@
 
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
-export default function PendingPage() {
+function PendingContent() {
   const searchParams = useSearchParams();
   const reason = searchParams.get('reason');
 
@@ -62,5 +63,17 @@ export default function PendingPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function PendingPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="animate-pulse font-black text-slate-400">Loading Status...</div>
+      </div>
+    }>
+      <PendingContent />
+    </Suspense>
   );
 }

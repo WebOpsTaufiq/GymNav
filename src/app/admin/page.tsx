@@ -22,7 +22,9 @@ export default async function AdminPanel() {
     .order('created_at', { ascending: false });
 
   if (gymFetchError) {
-    console.error('Gym Fetch Error:', gymFetchError);
+    console.error('Gym Fetch Error:', gymFetchError.message);
+    console.error('Details:', gymFetchError.details);
+    console.error('Hint:', gymFetchError.hint);
   }
 
   return (
@@ -78,7 +80,9 @@ function AdminRow({ gym }: { gym: any }) {
         <p className="text-[10px] font-bold text-slate-400 uppercase">{gym.city}</p>
       </td>
       <td className="px-6 py-5 align-middle">
-        <p className="text-sm font-medium text-slate-600">{(gym.profiles as any)?.email || 'N/A'}</p>
+        <p className="text-sm font-medium text-slate-600">
+          {(Array.isArray(gym.profiles) ? gym.profiles[0] : gym.profiles)?.email || 'N/A'}
+        </p>
       </td>
       <td className="px-6 py-5 align-middle">
         <span className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${
