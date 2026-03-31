@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Target, Loader2, AlertCircle, ArrowRight, Building, MapPin, Users } from "lucide-react";
+import { Target, Loader2, AlertCircle, ArrowRight, Building, MapPin, Users, CheckCircle2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
 export default function SignupPage() {
@@ -137,121 +137,190 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-sans selection:bg-indigo-100 selection:text-indigo-900">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <Link href="/" className="flex items-center justify-center gap-2 mb-8 group w-max mx-auto">
-          <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center transition-transform group-hover:scale-105">
-            <Target className="w-5 h-5 text-white stroke-[2.5]" />
-          </div>
-          <span className="font-semibold text-2xl tracking-tight text-slate-900">GymNav</span>
-        </Link>
-        <h2 className="text-center text-3xl font-bold tracking-tight text-slate-900">
-          {step === 1 ? "Create your account" : "Set up your gym"}
-        </h2>
-        <p className="mt-2 text-center text-sm text-slate-500">
-          {step === 1 ? (
-            <>Already have an account? <Link href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">Sign in</Link></>
-          ) : (
-            "You're almost there! Tell us about your facility."
-          )}
-        </p>
-      </div>
-
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow-sm border border-slate-200 sm:rounded-2xl sm:px-10 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1 bg-slate-100">
-             <div className="h-full bg-indigo-500 transition-all duration-500" style={{ width: step === 1 ? '50%' : '100%' }}></div>
+    <div className="min-h-screen bg-[#FAFAFA] flex font-sans selection:bg-[#ccff00] selection:text-[#111111]">
+      
+      {/* LEFT COLUMN: Signup Form */}
+      <div className="w-full lg:w-[45%] flex flex-col justify-center px-8 sm:px-14 lg:px-20 bg-white relative z-10 lg:rounded-r-[40px] shadow-[20px_0_60px_rgba(0,0,0,0.03)] selection:bg-[#ccff00] min-h-screen transition-all py-12">
+        <div className="w-full max-w-md mx-auto">
+          {/* Logo Space (Text Only) */}
+          <div className="mb-12 w-full flex justify-start">
+            <Link href="/" className="font-bold text-2xl tracking-tight text-[#111111] hover:opacity-80 transition-opacity">GymNav</Link>
           </div>
 
-          {step === 1 ? (
-            <form className="space-y-5" onSubmit={handleStep1}>
-              <div>
-                <label htmlFor="fullName" className="block text-sm font-medium text-slate-700">Full Name</label>
-                <div className="mt-1">
-                  <input id="fullName" type="text" required value={fullName} onChange={(e) => setFullName(e.target.value)} className="block w-full rounded-lg border-0 py-2.5 px-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm" placeholder="John Doe" />
-                </div>
+          {/* Headings */}
+          <div className="animate-fade-in-up" style={{ animationFillMode: 'both' }}>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center gap-1">
+                <div className={`w-10 h-1.5 rounded-full transition-colors duration-500 ${step === 1 ? 'bg-[#111111]' : 'bg-gray-200'}`}></div>
+                <div className={`w-10 h-1.5 rounded-full transition-colors duration-500 ${step === 2 ? 'bg-[#111111]' : 'bg-gray-200'}`}></div>
               </div>
-              
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-slate-700">Email address</label>
-                <div className="mt-1">
-                  <input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="block w-full rounded-lg border-0 py-2.5 px-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm" placeholder="owner@gym.com" />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-slate-700">Password</label>
-                <div className="mt-1">
-                  <input id="password" type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} className="block w-full rounded-lg border-0 py-2.5 px-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm" placeholder="••••••••" />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-700">Confirm Password</label>
-                <div className="mt-1">
-                  <input id="confirmPassword" type="password" required minLength={6} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="block w-full rounded-lg border-0 py-2.5 px-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm" placeholder="••••••••" />
-                </div>
-              </div>
-
-              <div className="pt-2">
-                <button type="submit" disabled={loading} className="flex w-full justify-center items-center gap-2 rounded-lg bg-indigo-600 px-3 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-indigo-600 disabled:opacity-70 disabled:cursor-not-allowed">
-                  {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <>Continue <ArrowRight className="w-4 h-4 ml-1" /></>}
-                </button>
-              </div>
-            </form>
-          ) : (
-            <form className="space-y-5" onSubmit={handleStep2}>
-              <div>
-                <label htmlFor="gymName" className="block text-sm font-medium text-slate-700">Gym Name</label>
-                <div className="relative mt-1 rounded-md shadow-sm">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <Building className="h-5 w-5 text-slate-400" aria-hidden="true" />
-                  </div>
-                  <input id="gymName" type="text" required value={gymName} onChange={(e) => setGymName(e.target.value)} className="block w-full rounded-lg border-0 py-2.5 pl-10 px-3 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm" placeholder="Iron Paradise" />
-                </div>
-              </div>
-              
-              <div>
-                <label htmlFor="city" className="block text-sm font-medium text-slate-700">City</label>
-                <div className="relative mt-1 rounded-md shadow-sm">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <MapPin className="h-5 w-5 text-slate-400" aria-hidden="true" />
-                  </div>
-                  <input id="city" type="text" required value={city} onChange={(e) => setCity(e.target.value)} className="block w-full rounded-lg border-0 py-2.5 pl-10 px-3 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm" placeholder="Mumbai" />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="members" className="block text-sm font-medium text-slate-700">Approx. Members</label>
-                <div className="relative mt-1 rounded-md shadow-sm">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                    <Users className="h-5 w-5 text-slate-400" aria-hidden="true" />
-                  </div>
-                  <select id="members" value={memberCount} onChange={(e) => setMemberCount(e.target.value)} className="block w-full rounded-lg border-0 py-3 pl-10 px-3 text-slate-900 ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm bg-white">
-                    <option value="Under 50">Under 50</option>
-                    <option value="50-100">50-100</option>
-                    <option value="100-300">100-300</option>
-                    <option value="300+">300+</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="pt-2">
-                <button type="submit" disabled={loading} className="flex w-full justify-center items-center gap-2 rounded-lg bg-indigo-600 px-3 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-indigo-600 disabled:opacity-70 disabled:cursor-not-allowed">
-                  {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Complete Setup"}
-                </button>
-              </div>
-            </form>
-          )}
-
-          {error && (
-            <div className="mt-6 flex items-start p-4 bg-red-50 border border-red-100 rounded-lg">
-              <AlertCircle className="w-5 h-5 text-red-500 mr-3 flex-shrink-0 mt-0.5" />
-              <p className="text-sm text-red-600 font-medium leading-relaxed">{error}</p>
+              <span className="text-xs font-bold text-gray-400 uppercase tracking-wider ml-2">Step {step} of 2</span>
             </div>
-          )}
+            
+            <h2 className="text-4xl lg:text-5xl font-black tracking-tighter text-[#111111] mb-3">
+              {step === 1 ? "Start your free trial." : "Set up your gym."}
+            </h2>
+            <p className="text-lg text-gray-500 mb-10 font-medium">
+              {step === 1 ? (
+                <>Already have an account? <Link href="/login" className="text-[#111111] underline decoration-2 decoration-[#ccff00] hover:text-[#ccff00] transition-colors">Sign in</Link>.</>
+              ) : (
+                "You're almost there! Tell us about your facility."
+              )}
+            </p>
+          </div>
+
+          {/* Form */}
+          <div className="animate-fade-in-up" style={{ animationDelay: '100ms', animationFillMode: 'both' }}>
+            {step === 1 ? (
+              <form className="space-y-5" onSubmit={handleStep1}>
+                <div>
+                  <label htmlFor="fullName" className="block text-xs font-bold text-[#111111] mb-2 uppercase tracking-wide">Full Name</label>
+                  <input id="fullName" type="text" required value={fullName} onChange={(e) => setFullName(e.target.value)} className="block w-full rounded-2xl border-0 bg-gray-50 py-3.5 px-5 text-[#111111] font-medium shadow-sm ring-1 ring-inset ring-transparent focus:bg-white focus:ring-2 focus:ring-inset focus:ring-[#111111] transition-all outline-none" placeholder="John Doe" />
+                </div>
+                
+                <div>
+                  <label htmlFor="email" className="block text-xs font-bold text-[#111111] mb-2 uppercase tracking-wide">Email address</label>
+                  <input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="block w-full rounded-2xl border-0 bg-gray-50 py-3.5 px-5 text-[#111111] font-medium shadow-sm ring-1 ring-inset ring-transparent focus:bg-white focus:ring-2 focus:ring-inset focus:ring-[#111111] transition-all outline-none" placeholder="owner@gym.com" />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="password" className="block text-xs font-bold text-[#111111] mb-2 uppercase tracking-wide">Password</label>
+                    <input id="password" type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} className="block w-full rounded-2xl border-0 bg-gray-50 py-3.5 px-5 text-[#111111] font-medium shadow-sm ring-1 ring-inset ring-transparent focus:bg-white focus:ring-2 focus:ring-inset focus:ring-[#111111] transition-all outline-none" placeholder="••••••••" />
+                  </div>
+                  <div>
+                    <label htmlFor="confirmPassword" className="block text-xs font-bold text-[#111111] mb-2 uppercase tracking-wide">Confirm</label>
+                    <input id="confirmPassword" type="password" required minLength={6} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="block w-full rounded-2xl border-0 bg-gray-50 py-3.5 px-5 text-[#111111] font-medium shadow-sm ring-1 ring-inset ring-transparent focus:bg-white focus:ring-2 focus:ring-inset focus:ring-[#111111] transition-all outline-none" placeholder="••••••••" />
+                  </div>
+                </div>
+
+                <div className="pt-4">
+                  <button type="submit" disabled={loading} className="group w-full flex items-center justify-between rounded-full bg-[#111111] p-2 pr-6 text-white text-lg font-bold transition-all hover:bg-[#ccff00] hover:text-[#111111] disabled:opacity-70 disabled:cursor-not-allowed">
+                    <div className="w-12 h-12 bg-white/10 group-hover:bg-[#111111] rounded-full flex items-center justify-center transition-colors">
+                      {loading ? <Loader2 className="w-6 h-6 animate-spin text-white group-hover:text-[#ccff00]" /> : <ArrowRight className="w-6 h-6 text-white group-hover:text-[#ccff00]" />}
+                    </div>
+                    <span>Continue to Setup</span>
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <form className="space-y-5 animate-fade-in-up" onSubmit={handleStep2}>
+                <div>
+                  <label htmlFor="gymName" className="block text-xs font-bold text-[#111111] mb-2 uppercase tracking-wide">Gym Name</label>
+                  <div className="relative rounded-2xl shadow-sm">
+                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                      <Building className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                    </div>
+                    <input id="gymName" type="text" required value={gymName} onChange={(e) => setGymName(e.target.value)} className="block w-full rounded-2xl border-0 bg-gray-50 py-3.5 pl-12 px-5 text-[#111111] font-medium shadow-sm ring-1 ring-inset ring-transparent focus:bg-white focus:ring-2 focus:ring-inset focus:ring-[#111111] transition-all outline-none" placeholder="Iron Paradise" />
+                  </div>
+                </div>
+                
+                <div>
+                  <label htmlFor="city" className="block text-xs font-bold text-[#111111] mb-2 uppercase tracking-wide">City</label>
+                  <div className="relative rounded-2xl shadow-sm">
+                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                      <MapPin className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                    </div>
+                    <input id="city" type="text" required value={city} onChange={(e) => setCity(e.target.value)} className="block w-full rounded-2xl border-0 bg-gray-50 py-3.5 pl-12 px-5 text-[#111111] font-medium shadow-sm ring-1 ring-inset ring-transparent focus:bg-white focus:ring-2 focus:ring-inset focus:ring-[#111111] transition-all outline-none" placeholder="Mumbai" />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="members" className="block text-xs font-bold text-[#111111] mb-2 uppercase tracking-wide">Approx. Members</label>
+                  <div className="relative rounded-2xl shadow-sm">
+                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                      <Users className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                    </div>
+                    <select id="members" value={memberCount} onChange={(e) => setMemberCount(e.target.value)} className="block w-full rounded-2xl border-0 bg-gray-50 py-3.5 pl-12 px-5 text-[#111111] font-medium shadow-sm ring-1 ring-inset ring-transparent focus:bg-white focus:ring-2 focus:ring-inset focus:ring-[#111111] transition-all outline-none appearance-none">
+                      <option value="Under 50">Under 50</option>
+                      <option value="50-100">50-100</option>
+                      <option value="100-300">100-300</option>
+                      <option value="300+">300+</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="pt-4">
+                  <button type="submit" disabled={loading} className="group w-full flex items-center justify-between rounded-full bg-[#111111] p-2 pr-6 text-white text-lg font-bold transition-all hover:bg-[#ccff00] hover:text-[#111111] disabled:opacity-70 disabled:cursor-not-allowed">
+                    <div className="w-12 h-12 bg-white/10 group-hover:bg-[#111111] rounded-full flex items-center justify-center transition-colors">
+                      {loading ? <Loader2 className="w-6 h-6 animate-spin text-white group-hover:text-[#ccff00]" /> : <CheckCircle2 className="w-6 h-6 text-white group-hover:text-[#ccff00]" />}
+                    </div>
+                    <span>Complete Setup</span>
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* Alerts */}
+            {error && (
+              <div className="mt-8 flex items-start p-4 bg-red-50 border border-red-100 rounded-2xl animate-fade-in-up">
+                <AlertCircle className="w-5 h-5 text-red-500 mr-3 flex-shrink-0 mt-0.5" />
+                <p className="text-sm text-red-600 font-bold leading-relaxed">{error}</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
+
+      {/* RIGHT COLUMN: Illustration / Details */}
+      <div className="hidden lg:flex lg:w-[55%] relative flex-col items-center justify-center p-12 overflow-hidden bg-[#FAFAFA]">
+        
+        {/* Abstract Background Blur Orbs */}
+        <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-[#ccff00] rounded-full mix-blend-multiply opacity-20 blur-[100px] animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-slate-200 rounded-full mix-blend-multiply opacity-50 blur-[120px]"></div>
+
+        {/* Floating UI Composition */}
+        <div className="relative w-full max-w-lg z-10 animate-fade-in-up" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
+          
+          {/* Main Glass Dashboard Widget */}
+          <div className="bg-white/60 backdrop-blur-xl border border-white/80 p-10 rounded-[40px] shadow-[0_40px_80px_rgba(0,0,0,0.06)] transform hover:-translate-y-2 transition-transform duration-500">
+            <div className="flex items-center justify-between mb-10">
+              <div className="w-14 h-14 bg-[#111111] rounded-full flex items-center justify-center shadow-lg">
+                <Target className="w-7 h-7 text-[#ccff00]" />
+              </div>
+              <div className="px-5 py-2.5 bg-white rounded-full text-xs font-black tracking-widest uppercase text-[#111111] shadow-sm">
+                Launch Control
+              </div>
+            </div>
+
+            <div className="space-y-5">
+              <div className="h-4 w-1/3 bg-gray-200/80 rounded-full"></div>
+              <div className="h-12 w-4/5 bg-[#111111] rounded-2xl"></div>
+              <div className="h-4 w-1/2 bg-gray-200/80 rounded-full"></div>
+            </div>
+
+            {/* Micro Widgets */}
+            <div className="mt-10 grid grid-cols-2 gap-5">
+              <div className="p-6 bg-[#ccff00] rounded-[32px] shadow-sm flex flex-col justify-center transform hover:scale-105 transition-transform duration-300">
+                <div className="text-sm font-bold text-[#111111]/60 uppercase tracking-wider mb-2">Activation</div>
+                <div className="text-3xl font-black tracking-tighter text-[#111111]">Instant</div>
+              </div>
+              <div className="p-6 bg-white rounded-[32px] shadow-sm flex flex-col justify-center">
+                <div className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2">Capacity</div>
+                <div className="text-3xl font-black tracking-tighter text-[#111111]">Unlimited</div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Decorative Floating Pill */}
+          <div className="absolute -left-12 top-32 bg-white px-6 py-4 rounded-full shadow-[0_20px_40px_rgba(0,0,0,0.08)] animate-bounce" style={{ animationDuration: '3.5s' }}>
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 bg-indigo-500 rounded-full animate-pulse"></div>
+              <span className="text-sm font-bold tracking-tight text-[#111111]">Workspace initializing</span>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Bottom Text Statement */}
+        <div className="absolute bottom-12 text-center w-full">
+          <p className="text-[#111111] font-bold text-xl tracking-tight opacity-50">
+            Automate renewals. Stop chasing payments.
+          </p>
+        </div>
+
+      </div>
+      
     </div>
   );
 }

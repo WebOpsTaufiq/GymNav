@@ -103,9 +103,6 @@ export default function DashboardNav({ user, profile, gym, isOwner, children }: 
         
         {/* Sidebar Logo Header */}
         <div className="h-16 flex items-center px-6 border-b border-slate-100 shrink-0">
-           <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center mr-3 shadow-sm">
-             <TargetIcon />
-           </div>
            <span className="font-bold text-lg tracking-tight text-slate-900">GymNav</span>
         </div>
 

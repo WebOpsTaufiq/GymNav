@@ -15,23 +15,20 @@ export default function LandingPage() {
   }, []);
 
   const faqData = [
-    { q: "Is the setup fee refundable?", a: "The setup fee covers our team's time integrating your existing sheets and systems to GymNav. While it is non-refundable, it ensures a seamless zero-downtime transition." },
-    { q: "Can my members pay directly through GymNav?", a: "Yes! We integrate with popular payment gateways allowing your users to pay seamlessly via UPI, Cards, or Netbanking." },
-    { q: "Do I need technical knowledge to use this?", a: "Not at all. GymNav is designed to be as simple as Notion or standard CRMs. If you can use WhatsApp or Excel, you can use our system." },
+    { q: "Is the setup fee refundable?", a: "The setup fee covers our team's time integrating your existing sheets and systems. While it is non-refundable, it ensures a seamless zero-downtime transition." },
+    { q: "Can my members pay directly through the platform?", a: "Yes! We integrate with popular payment gateways allowing your users to pay seamlessly via UPI, Cards, or Netbanking." },
+    { q: "Do I need technical knowledge to use this?", a: "Not at all. The platform is designed to be as simple as Notion or standard CRMs. If you can use WhatsApp or Excel, you can use our system." },
     { q: "What happens if I cross my plan's member limit?", a: "We will automatically notify you before you hit the limit. You can seamlessly upgrade to the next tier from your billing dashboard without any disruption." },
-    { q: "Is there a mobile app?", a: "GymNav is a meticulously responsive web app, functioning flawlessly on mobile browsers. We also provide a PWA you can save to your homescreen." }
+    { q: "Is there a mobile app?", a: "The platform is a meticulously responsive web app, functioning flawlessly on mobile browsers. We also provide a PWA you can save to your homescreen." }
   ];
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] text-[#111111] font-sans selection:bg-[#ccff00] selection:text-[#111111] overflow-hidden">
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? "bg-[#FAFAFA]/90 backdrop-blur-md py-4" : "bg-transparent py-6"}`}>
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-             <div className="w-10 h-10 rounded-xl bg-[#ccff00] flex items-center justify-center shadow-sm">
-               <Target className="w-6 h-6 text-[#111111] stroke-[2.5]" />
-             </div>
+          <Link href="/" className="flex items-center gap-3">
              <span className="font-bold text-2xl tracking-tight">GymNav</span>
-          </div>
+          </Link>
           <div className="hidden md:flex items-center space-x-10 bg-white/60 backdrop-blur-md px-8 py-3 rounded-full border border-gray-200/50 shadow-sm">
             <Link href="#features" className="text-sm font-semibold text-gray-500 hover:text-[#111111] transition-colors">How it works</Link>
             <Link href="#pricing" className="text-sm font-semibold text-gray-500 hover:text-[#111111] transition-colors">Pricing</Link>
@@ -112,10 +109,7 @@ export default function LandingPage() {
                <h1 className="text-6xl md:text-[80px] font-black tracking-tighter leading-[1.05] mb-8">
                  Your Gym <br />
                  Runs Itself with <br />
-                 <span className="inline-flex items-center gap-4 relative">
-                   <Target className="w-12 h-12 md:w-16 md:h-16 text-[#111111] absolute -left-16 md:-left-20 top-2 lg:top-4 opacity-10" />
-                   GymNav
-                 </span>
+                 <span className="text-[#111111]">GymNav</span>
                </h1>
 
                <p className="text-xl text-gray-500 mb-12 leading-relaxed font-medium">
@@ -133,21 +127,6 @@ export default function LandingPage() {
                    Learn more <ArrowRight className="w-4 h-4" />
                  </Link>
                </div>
-
-               <div className="flex items-center gap-10 pt-8 border-t border-gray-200/60">
-                  <div>
-                    <p className="text-3xl font-black mb-1">500+</p>
-                    <p className="text-sm font-semibold text-gray-500">Trusted Teams</p>
-                  </div>
-                  <div>
-                    <p className="text-3xl font-black mb-1">₹2.4L</p>
-                    <p className="text-sm font-semibold text-gray-500">Recovered Monthly</p>
-                  </div>
-                  <div>
-                    <p className="text-3xl font-black mb-1">90%</p>
-                    <p className="text-sm font-semibold text-gray-500">User Satisfaction</p>
-                  </div>
-               </div>
             </div>
           </div>
         </section>
@@ -160,7 +139,7 @@ export default function LandingPage() {
               </div>
               <h2 className="text-5xl font-black tracking-tighter mb-6 leading-tight">Gym owners spend more time chasing payments...</h2>
               <p className="text-lg text-gray-500 font-medium leading-relaxed">
-                 ...than running their actual business. GymNav flips the script so operations feel effortless.
+                 ...than running their actual business. We flip the script so operations feel effortless.
               </p>
            </div>
 
@@ -216,7 +195,7 @@ export default function LandingPage() {
               <div>
                 <h3 className="text-4xl font-black tracking-tighter mb-6">Sort tasks by priority and dates</h3>
                 <p className="text-lg text-gray-500 font-medium leading-relaxed mb-10">
-                  Whether you import members from excel or add them manually, GymNav sends smart WhatsApp and SMS nudges exactly on schedule.
+                  Whether you import members from excel or add them manually, smart WhatsApp and SMS nudges are sent exactly on schedule.
                 </p>
                 <Link href="/signup" className="group inline-flex items-center bg-[#111111] text-white px-2 py-2 rounded-full font-semibold hover:bg-black transition-all hover:scale-105 duration-300">
                   <span className="px-6">Start for Free</span>
@@ -322,12 +301,9 @@ export default function LandingPage() {
       {/* FOOTER */}
       <footer className="bg-white py-16 border-t border-gray-100">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex items-center gap-3">
-             <div className="w-10 h-10 rounded-xl bg-[#ccff00] flex items-center justify-center">
-               <Target className="w-6 h-6 text-[#111111] stroke-[2.5]" />
-             </div>
+          <Link href="/" className="flex items-center gap-3">
              <span className="font-bold text-2xl tracking-tight">GymNav</span>
-          </div>
+          </Link>
           <p className="text-gray-500 text-sm font-medium">© {new Date().getFullYear()} GymNav Technologies. All rights reserved.</p>
           <div className="flex space-x-8 text-sm font-bold">
              <Link href="#" className="text-gray-400 hover:text-[#111111] transition-colors">Privacy</Link>
