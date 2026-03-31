@@ -187,15 +187,15 @@ export default function LandingPage() {
               </div>
               <h2 className="text-5xl font-black tracking-tighter mb-6 leading-tight">Sort operational importance, never miss a beat</h2>
               <p className="text-lg text-gray-500 font-medium leading-relaxed">
-                 Get feedback, share updates, and keep your entire gym staff aligned effortlessly.
+                 Spot expiring gym memberships, track failed payments, and keep your entire operational flow aligned effortlessly.
               </p>
            </div>
 
            <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div>
-                <h3 className="text-4xl font-black tracking-tighter mb-6">Sort tasks by priority and dates</h3>
+                <h3 className="text-4xl font-black tracking-tighter mb-6">Drive revenue through automation</h3>
                 <p className="text-lg text-gray-500 font-medium leading-relaxed mb-10">
-                  Whether you import members from excel or add them manually, smart WhatsApp and SMS nudges are sent exactly on schedule.
+                  Whether you import members from scratch or add them manually, smart retention tracking and automated renewals are seamlessly handled for you.
                 </p>
                 <Link href="/signup" className="group inline-flex items-center bg-[#111111] text-white px-2 py-2 rounded-full font-semibold hover:bg-black transition-all hover:scale-105 duration-300">
                   <span className="px-6">Start for Free</span>

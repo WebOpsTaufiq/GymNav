@@ -27,7 +27,6 @@ const TargetIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" heig
 const MAIN_LINKS = [
   { name: 'Dashboard', href: '/dashboard', icon: GridIcon },
   { name: 'Members', href: '/dashboard/members', icon: UsersIcon },
-  { name: 'Schedule', href: '/dashboard/schedule', icon: CalendarIcon },
   { name: 'Analytics', href: '/dashboard/analytics', icon: ChartIcon },
   { name: 'Billing', href: '/dashboard/billing', icon: CardIcon },
 ];
@@ -35,8 +34,6 @@ const MAIN_LINKS = [
 const OP_LINKS = [
   { name: 'Check-In', href: '/dashboard/checkin', icon: CheckIcon },
   { name: 'Leads', href: '/dashboard/leads', icon: FunnelIcon },
-  { name: 'Communications', href: '/dashboard/comms', icon: MessageIcon },
-  { name: 'Staff', href: '/dashboard/staff', icon: PersonIcon },
 ];
 
 const CrownIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path></svg>

@@ -5,7 +5,7 @@ import { getAdminClient } from '@/lib/supabase/admin';
  */
 export async function checkPlanLimit(
   gymId: string, 
-  table: 'members' | 'staff',
+  table: 'members',
   plan: string
 ) {
   const supabaseAdmin = getAdminClient();
@@ -22,9 +22,7 @@ export async function checkPlanLimit(
     .select('*', { count: 'exact', head: true })
     .eq('gym_id', gymId);
   
-  const limit = table === 'members' 
-    ? planRow.max_members 
-    : planRow.max_staff;
+  const limit = planRow.max_members;
   
   if ((count ?? 0) >= limit) {
     throw new Response(

@@ -50,8 +50,7 @@ export default async function DashboardPage() {
     { data: paymentsLast6Months },
     { data: recentCheckins },
     { data: recentMembers },
-    { data: recentPayments },
-    { data: todayClasses }
+    { data: recentPayments }
   ] = await Promise.all([
     supabase.from('members').select('id, plan_price').eq('gym_id', gymId).eq('status', 'active'),
     supabase.from('members').select('*', { count: 'exact', head: true }).eq('gym_id', gymId).gte('created_at', firstDayOfMonth.toISOString()),
@@ -60,8 +59,7 @@ export default async function DashboardPage() {
     supabase.from('payments').select('amount, paid_at').eq('gym_id', gymId).eq('status', 'paid').gte('paid_at', sixMonthsAgo.toISOString()),
     supabase.from('checkins').select('id, checked_in_at, members(full_name)').eq('gym_id', gymId).order('checked_in_at', { ascending: false }).limit(8),
     supabase.from('members').select('id, created_at, full_name').eq('gym_id', gymId).order('created_at', { ascending: false }).limit(8),
-    supabase.from('payments').select('id, paid_at, amount, members(full_name)').eq('gym_id', gymId).eq('status', 'paid').order('paid_at', { ascending: false }).limit(8),
-    supabase.from('classes').select('*').eq('gym_id', gymId).gte('scheduled_at', today.toISOString()).lt('scheduled_at', tomorrow.toISOString()).order('scheduled_at', { ascending: true })
+    supabase.from('payments').select('id, paid_at, amount, members(full_name)').eq('gym_id', gymId).eq('status', 'paid').order('paid_at', { ascending: false }).limit(8)
   ]);
 
   const totalMembersCount = activeMembers?.length || 0;
@@ -141,7 +139,7 @@ export default async function DashboardPage() {
           </div>
           
           <div className="lg:col-span-2 space-y-6">
-             {/* ACTIVITY FEED */}
+              {/* ACTIVITY FEED */}
              <div className="bg-white p-8 rounded-[40px] border border-gray-100 shadow-[0_10px_40px_rgba(0,0,0,0.02)]">
                 <h2 className="text-2xl font-black text-[#111111] tracking-tighter mb-6">Live Feed</h2>
                 {!hasData ? (
@@ -168,35 +166,6 @@ export default async function DashboardPage() {
                    </div>
                 ) : (
                    <p className="text-sm font-medium text-slate-500 text-center py-6">No recent activity on record.</p>
-                )}
-             </div>
-
-             {/* UPCOMING CLASSES */}
-             <div className="bg-white p-8 rounded-[40px] border border-gray-100 shadow-[0_10px_40px_rgba(0,0,0,0.02)]">
-                <h2 className="text-2xl font-black text-[#111111] tracking-tighter mb-6">Today's Sessions</h2>
-                {!hasData || todayClasses?.length === 0 ? (
-                   <div className="text-center py-10 bg-[#FAFAFA] rounded-[24px]">
-                      <p className="text-sm font-bold text-gray-400 mb-4">No schedules.</p>
-                      <Link href="/dashboard/schedule" className="text-sm font-black text-[#111111] border-b-2 border-[#ccff00] hover:text-[#ccff00] transition-colors">
-                         Initialize schedule &rarr;
-                      </Link>
-                   </div>
-                ) : (
-                   <div className="space-y-3">
-                      {todayClasses?.map((cls, i) => (
-                         <div key={i} className="flex justify-between items-center p-4 rounded-2xl border border-gray-100 bg-[#FAFAFA]">
-                            <div>
-                               <p className="font-black text-sm text-[#111111] mb-1">{cls.name}</p>
-                               <p className="text-xs font-bold text-gray-400">{new Date(cls.scheduled_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} • {cls.trainer_name}</p>
-                            </div>
-                            <div className="text-right">
-                               <span className="inline-block px-3 py-1 bg-[#111111] text-[#ccff00] text-[10px] font-black tracking-widest uppercase rounded-full shadow-sm">
-                                  {cls.capacity} spots
-                               </span>
-                            </div>
-                         </div>
-                      ))}
-                   </div>
                 )}
              </div>
           </div>

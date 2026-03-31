@@ -63,7 +63,6 @@ export async function POST(req: NextRequest) {
       { data: renewingSoon },
       { data: atRiskMembers },
       { data: recentPayments },
-      { data: todayClasses },
       { data: recentLeads }
     ] = await Promise.all([
       supabaseAdmin.from('gyms').select('name, city, plan').eq('id', gymId).single(),
@@ -73,7 +72,6 @@ export async function POST(req: NextRequest) {
       supabaseAdmin.from('members').select('full_name, renewal_date, phone').eq('gym_id', gymId).gte('renewal_date', today.toISOString().split('T')[0]).lte('renewal_date', sevenDaysLater.toISOString().split('T')[0]),
       supabaseAdmin.from('members').select('full_name, phone, email, plan_name').eq('gym_id', gymId).eq('status', 'at-risk'),
       supabaseAdmin.from('payments').select('amount, status, paid_at, members(full_name)').eq('gym_id', gymId).order('created_at', { ascending: false }).limit(10),
-      supabaseAdmin.from('classes').select('name, trainer_name, scheduled_at, capacity').eq('gym_id', gymId).gte('scheduled_at', today.toISOString()).order('scheduled_at', { ascending: true }).limit(10),
       supabaseAdmin.from('leads').select('name, source, status, created_at').eq('gym_id', gymId).order('created_at', { ascending: false }).limit(10)
     ]);
 
@@ -82,7 +80,6 @@ export async function POST(req: NextRequest) {
     const renewList = renewingSoon?.map(m => `${m.full_name} (renews ${m.renewal_date})`).join(', ') || 'None';
     const atRiskList = atRiskMembers?.map(m => `${m.full_name} (${m.plan_name || 'No plan'}, ${m.phone || 'no phone'})`).join(', ') || 'None';
     const recentPaymentsList = recentPayments?.map(p => `₹${p.amount} - ${p.status} by ${(p.members as any)?.full_name || 'Unknown'}`).join('; ') || 'None';
-    const classList = todayClasses?.map(c => `${c.name} at ${new Date(c.scheduled_at).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})} by ${c.trainer_name || 'TBD'} (${c.capacity} capacity)`).join('; ') || 'None';
     const leadsList = recentLeads?.map(l => `${l.name} (${l.source}, ${l.status})`).join(', ') || 'None';
 
     const systemPrompt = `You are GymNav AI — the 24/7 AI Operations Manager for "${gym?.name || 'this gym'}" located in ${gym?.city || 'India'}. You are not just a chatbot. You are an autonomous AI employee who manages this entire gym's operations. You think proactively, flag problems before they escalate, draft communications, analyze trends, and make actionable recommendations.
@@ -103,9 +100,6 @@ ${atRiskList}
 
 💰 RECENT PAYMENTS:
 ${recentPaymentsList}
-
-📅 TODAY'S CLASSES:
-${classList}
 
 🎯 RECENT LEADS:
 ${leadsList}
